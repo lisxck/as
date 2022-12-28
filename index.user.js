@@ -7,6 +7,7 @@
 // ==/UserScript==
 
 window.onload = function(){
+    console.log("A")
     const parseCookie = (str) => {
     if (!str.length) return null;
     return str
