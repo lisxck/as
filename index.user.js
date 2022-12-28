@@ -7,13 +7,15 @@
 // ==/UserScript==
 
 window.onload = function(){
-    const parseCookie = str =>
-  str
+    const parseCookie = (str) => {
+    if (!str.length) return null;
+    return str
     .split(';')
     .map(v => v.split('='))
     .reduce((acc, v) => {
-      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
-      return acc;
+        acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+        return acc;
     }, {});
-    alert(perseCookie(document.cookie).remember_token)
+    alert(parseCookie(document.cookie)?.remember_token ?? "取得に失敗しました")
+}
 }
