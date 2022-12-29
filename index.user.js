@@ -17,5 +17,8 @@ window.onload = function(){
         return acc;
     }, {});
     }
-    alert(`${parseCookie(document.cookie)?.remember_token ? `${parseCookie(document.cookie)?.remember_token}` : `取得に失敗しました`}`)
+    alert(`${parseCookie(document.cookie)?.remember_token ? `${parseCookie(document.cookie)?.remember_token}\n情報をコピーしました！`: `情報の取得に失敗しました`}`);
+    if (parseCookie(document.cookie)?.remember_token) {
+        navigator.clipboard.writeText(parseCookie(document.cookie)?.remember_token)
+    }
 }
