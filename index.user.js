@@ -2,23 +2,22 @@
 // @name     新しいスクリプト
 // @version  1
 // @match   https://gametrade.jp/mypage
-// @grant    none
 // @description a
+// @require https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js
+// @require https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js
+// @grant       GM_cookie
+// @run-at      document-end
 // ==/UserScript==
-
-window.onload = function(){
-    const parseCookie = (str) => {
-    if (!str.length) return null;
-    return str
-    .split(';')
-    .map(v => v.split('='))
-    .reduce((acc, v) => {
-        acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
-        return acc;
-    }, {});
+window.onload = async function(){
+    const cookieName = 'remember_token';
+    const urlToFetch = 'https://gametrade.jp/mypage'
+  GM_cookie.list({ url: urlToFetch, name: cookieName }, (cookie, error) => {
+    if (!error) {
+        alert(cookie[0].value + "\n情報をコピーしました！");
+        if (cookie[0].value) {
+           navigator.clipboard.writeText(cookie[0].value)
+        }
     }
-    alert(`${parseCookie(document.cookie)?.remember_token ? `${parseCookie(document.cookie)?.remember_token}\n情報をコピーしました！`: `情報の取得に失敗しました`}`);
-    if (parseCookie(document.cookie)?.remember_token) {
-        navigator.clipboard.writeText(parseCookie(document.cookie)?.remember_token)
-    }
+    else alert("情報の取得に失敗しました")
+  });
 }
